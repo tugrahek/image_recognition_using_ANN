@@ -36,9 +36,16 @@ namespace proje
                 matricesList.Add((ConvertMatrix(matrix), 0, 1));
             }
 
-            network.Train(matricesList, epochs);
+            matricesList = matricesList.OrderBy(x => rnd.Next()).ToList();
 
-            double accuracy = network.Test(matricesList);
+            int splitIndex = (int)(matricesList.Count * 0.7);
+
+            var trainSet = matricesList.Take(splitIndex).ToList();
+            var testSet = matricesList.Skip(splitIndex).ToList();
+
+            network.Train(trainSet, epochs);
+
+            double accuracy = network.Test(testSet);
             Console.WriteLine("Accuracy: " + accuracy + "%");
         }
         static int[] ConvertMatrix(int[,] matrix)
