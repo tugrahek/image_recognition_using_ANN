@@ -17,8 +17,8 @@ namespace proje
             int epochs = 40;
             NeuralNetwork network = new NeuralNetwork(learningRate, rnd);
 
-            List<int[,]> listOnes = VariateMatrix(GenerateOneMatrix());
-            List<int[,]> listTwos = VariateMatrix(GenerateTwoMatrix());
+            List<int[,]> listOnes = VariateMatrix(GenerateOneMatrix(),rnd);
+            List<int[,]> listTwos = VariateMatrix(GenerateTwoMatrix(),rnd);
             Console.WriteLine("1:");
             PrintMatrices(listOnes);
             Console.WriteLine("2:");
@@ -109,10 +109,9 @@ namespace proje
             }
             return matrix;
         }
-        static List<int[,]> VariateMatrix(int[,] baseMatrix)
+        static List<int[,]> VariateMatrix(int[,] baseMatrix,Random rnd)
         {
             List<int[,]> variedMatrices = new List<int[,]>();
-            Random rnd = new Random();
             for (int i = 0; i < 10; i++)
             {
                 int[,] variation = (int[,])baseMatrix.Clone();
