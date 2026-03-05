@@ -15,10 +15,12 @@ namespace proje
             Random rnd = new Random();
             double learningRate = 0.001;
             int epochs = 40;
+            int numSamplesPerClass = 200;
+            int flipCount = 7;
             NeuralNetwork network = new NeuralNetwork(learningRate, rnd);
 
-            List<int[,]> listOnes = VariateMatrix(GenerateOneMatrix(),rnd);
-            List<int[,]> listTwos = VariateMatrix(GenerateTwoMatrix(),rnd);
+            List<int[,]> listOnes = VariateMatrix(GenerateOneMatrix(),numSamplesPerClass,flipCount,rnd);
+            List<int[,]> listTwos = VariateMatrix(GenerateTwoMatrix(),numSamplesPerClass,flipCount,rnd);
             Console.WriteLine("1:");
             PrintMatrices(listOnes);
             Console.WriteLine("2:");
@@ -47,6 +49,7 @@ namespace proje
 
             double accuracy = network.Test(testSet);
             Console.WriteLine("Accuracy: " + accuracy + "%");
+          
         }
         static int[] ConvertMatrix(int[,] matrix)
         {
@@ -109,13 +112,13 @@ namespace proje
             }
             return matrix;
         }
-        static List<int[,]> VariateMatrix(int[,] baseMatrix,Random rnd)
+        static List<int[,]> VariateMatrix(int[,] baseMatrix,int numSamples,int flipCount,Random rnd)
         {
             List<int[,]> variedMatrices = new List<int[,]>();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < numSamples; i++)
             {
                 int[,] variation = (int[,])baseMatrix.Clone();
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < flipCount; j++)
                 {
                     int row = rnd.Next(5);
                     int col = rnd.Next(5);
@@ -174,8 +177,8 @@ namespace proje
                 for (int i = 0; i < weights.Length; i++)
                 {
                     weights[i] += learningRate * inputs[i] * error;
-                    bias += learningRate * error;
                 }
+                bias += learningRate * error;
             }
         }
         public class NeuralNetwork
