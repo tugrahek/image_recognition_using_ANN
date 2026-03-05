@@ -191,9 +191,10 @@ namespace proje
             }
             public (double, double) Predict(int[] inputs)
             {
-                double output1 = neuron1.Compute(inputs);
-                double output2 = neuron2.Compute(inputs);
-                return (output1, output2);
+                double z1= neuron1.Compute(inputs);
+                double z2= neuron2.Compute(inputs);
+
+               return Softmax2(z1, z2);
             }
             public void Train(List<(int[], double, double)> matricesList, int epochs)
             {
@@ -234,6 +235,14 @@ namespace proje
             }
 
 
+        }
+        static (double p1,double p2) Softmax2(double z1,double z2)
+        {
+            double m = Math.Max(z1,z2);
+            double e1 = Math.Exp(z1 - m);
+            double e2 = Math.Exp(z2 - m);
+            double sum = e1+e2;
+            return(e1/sum,e2/sum);
         }
 
     }
