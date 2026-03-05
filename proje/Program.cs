@@ -144,10 +144,13 @@ namespace proje
         public class Neuron
         {
             private double[] weights;
+            private double bias;
+            
 
             public Neuron(int inputNumber, Random rnd)
             {
                 weights = new double[inputNumber];
+                bias = rnd.NextDouble()*2-1;
                 for (int i = 0; i < inputNumber; i++)
                 {
                     weights[i] = rnd.NextDouble() * 2 - 1;//[-1,1] 
@@ -160,7 +163,7 @@ namespace proje
                 {
                     sum += inputs[i] * weights[i];
                 }
-                return sum;
+                return sum+bias;
             }
 
 
@@ -171,6 +174,7 @@ namespace proje
                 for (int i = 0; i < weights.Length; i++)
                 {
                     weights[i] += learningRate * inputs[i] * error;
+                    bias += learningRate * error;
                 }
             }
         }
