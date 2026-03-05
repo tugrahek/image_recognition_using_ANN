@@ -26,7 +26,7 @@ namespace proje
             Console.WriteLine("2:");
             PrintMatrices(listTwos);
 
-            List<(int[], double, double)> matricesList = new List<(int[], double, double)>();
+            List<(double[], double, double)> matricesList = new List<(double[], double, double)>();
 
             foreach (var matrix in listOnes)
             {
@@ -51,15 +51,15 @@ namespace proje
             Console.WriteLine("Accuracy: " + accuracy + "%");
           
         }
-        static int[] ConvertMatrix(int[,] matrix)
+        static double   [] ConvertMatrix(int[,] matrix)
         {
-            int[] array = new int[matrix.GetLength(0) * matrix.GetLength(1)];
+            double[] array = new double[matrix.GetLength(0) * matrix.GetLength(1)];
             int index = 0;
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    array[index++] = matrix[i, j];
+                    array[index++] = (double)matrix[i, j];
                 }
             }
             return array;
@@ -159,7 +159,7 @@ namespace proje
                     weights[i] = rnd.NextDouble() * 2 - 1;//[-1,1] 
                 }
             }
-            public double Compute(int[] inputs)
+            public double Compute(double[] inputs)
             {
                 double sum = 0;
                 for (int i = 0; i < inputs.Length; i++)
@@ -170,7 +170,7 @@ namespace proje
             }
 
 
-            public void UpdateWeights(int[] inputs, double learningRate, double targetValue, double currentValue)
+            public void UpdateWeights(double[] inputs, double learningRate, double targetValue, double currentValue)
             {
 
                 double error = targetValue - currentValue;
@@ -192,14 +192,14 @@ namespace proje
                 neuron2 = new Neuron(25, rnd);
                 this.learningRate = learningRate;
             }
-            public (double, double) Predict(int[] inputs)
+            public (double, double) Predict(double[] inputs)
             {
                 double z1= neuron1.Compute(inputs);
                 double z2= neuron2.Compute(inputs);
 
                return Softmax2(z1, z2);
             }
-            public void Train(List<(int[], double, double)> matricesList, int epochs)
+            public void Train(List<(double[], double, double)> matricesList, int epochs)
             {
                 for (int epoch = 0; epoch < epochs; epoch++)
                 {
@@ -211,7 +211,7 @@ namespace proje
                     }
                 }
             }
-            public double Test(List<(int[], double, double)> matricesList)
+            public double Test(List<(double[], double, double)> matricesList)
             {
                 int correct = 0;
 
