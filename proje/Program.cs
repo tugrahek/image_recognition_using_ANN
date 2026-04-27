@@ -15,8 +15,8 @@ namespace proje
             Random rnd = new Random();
             double learningRate = 0.001;
             int epochs = 40;
-            int numSamplesPerClass = 200;
-            int flipCount = 7;
+            int numSamplesPerClass = 100;
+            int flipCount = 5;
             NeuralNetwork network = new NeuralNetwork(learningRate, rnd);
 
             List<int[,]> listOnes = VariateMatrix(GenerateOneMatrix(),numSamplesPerClass,flipCount,rnd);
@@ -49,7 +49,7 @@ namespace proje
 
             double accuracy = network.Test(testSet);
             Console.WriteLine("Accuracy: " + accuracy + "%");
-          
+            Console.WriteLine("kaç tane: " + numSamplesPerClass);
         }
         static double   [] ConvertMatrix(int[,] matrix)
         {
